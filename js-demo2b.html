@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>  
+<title>My Second Web Page</title>
+
+<link rel="stylesheet" href="demo.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Complete the click event for "Load Data" button below -->
+<script>
+    $(document).ready(function() {
+
+        $("#btn").click(function(event) {
+
+            // Create the table structure
+            var table = $("#burgers");
+            table.empty();
+            var caption = $("<caption>").appendTo(table);
+            var thead = $("<thead>").appendTo(table);
+            var tbody = $("<tbody>").appendTo(table);
+            var tfoot = $("<tfoot>").appendTo(table);
+            var itemCount = 4;
+
+            // Populate data in the JSON file to the table
+            $.getJSON("data.json", function(data) {
+
+                // caption
+                caption.text(data["title"]);
+
+                // declare each row
+                var headingRow = $("<tr>").attr("id", "showheading").appendTo(thead);
+                var caloriesRow = $("<tr>").attr("id", "showcalories").appendTo(tbody);
+                var fatRow = $("<tr>").attr("id", "showfat").appendTo(tbody);
+                var vendorRow = $("<tr>").attr("id", "showven").appendTo(tfoot);
+                const defaultVal = "N/A";
+
+                // specify that the first child is a subheading
+                headingRow.append(`<th> ${data["heading"] || defaultVal} </th>`);
+                caloriesRow.append(`<td> ${data["subheadcal"] || defaultVal} </td>`);
+                fatRow.append(`<td> ${data["subheadfat"] || defaultVal} </td>`);
+                vendorRow.append(`<td> ${data["subheadven"] || defaultVal} </td>`);
+
+                // populate data points
+                for (var i = 1; i <= itemCount; i++) {
+                    headingRow.append(`<th> ${data["head" + i] || defaultVal} </th>`);
+                    caloriesRow.append(`<td> ${data["cal" + i] || defaultVal} </td>`);
+                    fatRow.append(`<td> ${data["fat" + i] || defaultVal} </td>`);
+                    vendorRow.append(`<td> ${data["ven" + i] || defaultVal} </td>`)
+                }
+
+                // Replace the existing table (if any) with the new one
+                $("#burgers").replaceWith(table);
+            });
+        });
+    });
+</script>
+
+<!-- Complete the click event for "Load Data" button above -->
+
+</head> 	
+<body>
+
+<div id="container">
+
+    <header>My Web Site Brand</header>
+    <nav>
+        <ul>
+        <li><a href="js-demo2.html">Home</a></li>
+        <li><a href="js-demo2b.html">About</a></li>
+        <li><a href="js-demo2d.html">Gallery</a></li>
+        <li><a href="js-demo2c.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>My Second Heading</h1>
+        <p>My Second paragraph.</p>
+
+        <table id="burgers">
+            <!--<caption></caption>
+            <thead>
+                <tr id="showheading">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr id="showcalories">
+                    <td></td>
+                    <td></td> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="showfat">
+                    <td></td>
+                    <td></td> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr id="showven">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>-->
+        </table>
+
+        <input type = "button" id = "btn" value = "Load Data" style="margin-top:20px;" />
+    </main>
+
+    <footer>&copy; Copyright 2020</footer>
+
+</div>
+
+</body>
+</html>
